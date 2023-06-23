@@ -32,8 +32,26 @@ class MainWindow(QMainWindow):
         self.button8.clicked.connect(lambda: self.numPress("8"))
         self.button9.clicked.connect(lambda: self.numPress("9"))
 
+        self.buttonDiv.clicked.connect(lambda: self.funcPres("/"))
+        self.buttonTimes.clicked.connect(lambda: self.funcPres("*"))
+        self.buttonAdd.clicked.connect(lambda: self.funcPres("+"))
+        self.buttonMinus.clicked.connect(lambda: self.funcPres("-"))
+
         self.buttonClear.clicked.connect(self.clear)
         self.buttonCE.clicked.connect(self.clearEntry)
+
+        self.buttonToggle.clicked.connect(self.toggle)
+
+    def toggle(self):
+        self.degreeToggle = not self.degreeToggle
+        if self.degreeToggle:
+            self.buttonToggle.setText("Degrees")
+        elif not self.degreeToggle:
+            self.buttonToggle.setText("Radians")
+
+    def funcPres(self, n):
+        self.tempNums.append(n)
+        self.update()
 
     def clearEntry(self):
         try:
