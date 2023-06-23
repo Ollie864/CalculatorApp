@@ -11,12 +11,18 @@ class MainWindow(QMainWindow):
         uic.loadUi("ui/main.ui", self)
         self.show()
 
+        self.actionQuit.triggered.connect(exit)
+
 
 app = QApplication([])
 widget = QtWidgets.QStackedWidget()
 
 mainWindow = MainWindow()
 widget.addWidget(mainWindow)
+
+widget.setWindowTitle("Calculator")
+widget.setFixedHeight(750)
+widget.setMaximumWidth(1400)
 
 widget.show()
 app.exec_()
