@@ -32,6 +32,20 @@ class MainWindow(QMainWindow):
         self.button8.clicked.connect(lambda: self.numPress("8"))
         self.button9.clicked.connect(lambda: self.numPress("9"))
 
+        self.buttonClear.clicked.connect(self.clear)
+        self.buttonCE.clicked.connect(self.clearEntry)
+
+    def clearEntry(self):
+        try:
+            del self.tempNums[-1]
+        except:
+            pass
+        self.update()
+
+    def clear(self):
+        self.tempNums.clear()
+        self.update()
+
     def update(self):
         s = "".join(self.tempNums)
         self.lineEdit.setText(s)
