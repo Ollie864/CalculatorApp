@@ -37,8 +37,18 @@ class MainWindow(QMainWindow):
         self.buttonAdd.clicked.connect(lambda: self.funcPres("+"))
         self.buttonMinus.clicked.connect(lambda: self.funcPres("-"))
 
+        self.buttonPi.clicked.connect(lambda: self.numPress("π"))
+        self.buttonSqrt.clicked.connect(lambda: self.numPress("√("))
+        self.buttonSquared.clicked.connect(lambda: self.numPress("**2"))
+        self.buttonCubed.clicked.connect(lambda: self.numPress("**3"))
+        self.buttonPower.clicked.connect(lambda: self.numPress("**"))
+        self.buttonCloseBracket.clicked.connect(lambda: self.numPress(")"))
+
         self.buttonClear.clicked.connect(self.clear)
         self.buttonCE.clicked.connect(self.clearEntry)
+        self.buttonEquals.clicked.connect(self.equals)
+        self.buttonAns.clicked.connect(
+            lambda: self.numPress(self.storedAnswer))
 
         self.buttonToggle.clicked.connect(self.toggle)
 
@@ -63,6 +73,42 @@ class MainWindow(QMainWindow):
     def clear(self):
         self.tempNums.clear()
         self.update()
+
+    def equals(self):
+        s = "".join(self.tempNums)
+        s = s.replace("√", "math.sqrt")
+        s = s.replace("π", "math.pi")
+        s = s.replace("°", "math.radians")
+        s = s.replace("sin", "math.sin")
+        s = s.replace("cos", "math.cos")
+        s = s.replace("tan", "math.tan")
+
+        try:
+            answer = eval(s)
+            answer = round(answer, 4)
+            answer = str(answer)
+
+        except:
+            answer = "Error"
+
+        try:
+            self.lineEdit.setText(answer)
+        except:
+            self.lineEdit.setText("Error")
+
+        self.tempNums = [answer]
+        self.history(s, answer)
+        self.storedAnswer = answer
+        self.clear()
+
+    def history(self, s, answer):
+        label = QLineEdit()
+        s = s.replace("math.sqrt", "√")
+        s = s.replace("math.pi", "π")
+        s = s.replace("math.sin", "sin")
+        histText = f"{s} = {answer}"
+        label.setText(histText)
+        self.historyList.addItem(label.text())
 
     def update(self):
         s = "".join(self.tempNums)
