@@ -4,6 +4,8 @@ from PyQt5.QtWidgets import *
 from PyQt5 import uic
 from PyQt5.QtWidgets import QWidget
 
+import math
+
 
 class MainWindow(QMainWindow):
 
@@ -37,6 +39,11 @@ class MainWindow(QMainWindow):
         self.buttonAdd.clicked.connect(lambda: self.funcPres("+"))
         self.buttonMinus.clicked.connect(lambda: self.funcPres("-"))
 
+        self.buttonSin.clicked.connect(lambda: self.numPress("sin("))
+        self.buttonCos.clicked.connect(lambda: self.numPress("cos("))
+        self.buttonTan.clicked.connect(lambda: self.numPress("tan("))
+        # )))
+
         self.buttonPi.clicked.connect(lambda: self.numPress("π"))
         self.buttonSqrt.clicked.connect(lambda: self.numPress("√("))
         self.buttonSquared.clicked.connect(lambda: self.numPress("**2"))
@@ -44,6 +51,7 @@ class MainWindow(QMainWindow):
         self.buttonPower.clicked.connect(lambda: self.numPress("**"))
         self.buttonCloseBracket.clicked.connect(lambda: self.numPress(")"))
 
+        self.buttonClearHistory.clicked.connect(self.clearHistory)
         self.buttonClear.clicked.connect(self.clear)
         self.buttonCE.clicked.connect(self.clearEntry)
         self.buttonEquals.clicked.connect(self.equals)
@@ -51,6 +59,9 @@ class MainWindow(QMainWindow):
             lambda: self.numPress(self.storedAnswer))
 
         self.buttonToggle.clicked.connect(self.toggle)
+
+    def clearHistory(self):
+        self.historyList.clear()
 
     def toggle(self):
         self.degreeToggle = not self.degreeToggle
